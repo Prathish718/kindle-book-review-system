@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f4ef" />
+    <title>Kindle — your reading room</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home"
+        ><span class="brand-mark">K</span
+        ><span><b>kindle</b><small>YOUR READING ROOM</small></span></a
+      >
+      <nav class="nav">
+        <button class="nav-link active" data-page="home">
+          Home &amp; shelves</button
+        ><button class="nav-link" data-page="wishlist">My wishlist</button
+        ><button class="nav-link" data-page="dashboard">
+          Reading dashboard
+        </button>
+      </nav>
+      <button class="profile-button" id="profileButton">
+        <span class="avatar" id="avatar">+</span
+        ><span id="profileLabel">Sign in</span>
+      </button>
+    </header>
+    <main id="app" class="main" aria-live="polite"></main>
+    <footer>Kindle · A quiet place to read</footer>
+    <div class="toast" id="toast" role="status"></div>
+    <section
+      class="overlay"
+      id="authModal"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="authTitle"
+    >
+      <form class="modal auth-card" id="authForm">
+        <button class="icon-button close" type="button" data-close="authModal">
+          ×
+        </button>
+        <div class="eyebrow">Your reading room</div>
+        <h2 id="authTitle">Create your profile</h2>
+        <p class="muted" id="authIntro">
+          Join to share ratings with other readers.
+        </p>
+        <div id="authNameRow">
+          <label for="authName">Name</label
+          ><input id="authName" maxlength="60" autocomplete="name" required />
+        </div>
+        <label for="authEmail">Email</label
+        ><input
+          id="authEmail"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          required
+        /><label for="authPassword">Password</label
+        ><input
+          id="authPassword"
+          type="password"
+          minlength="12"
+          maxlength="128"
+          autocomplete="new-password"
+          required
+        />
+        <div id="authGenreRow">
+          <label for="authGenre">Favorite genre</label
+          ><select id="authGenre"></select>
+        </div>
+        <p class="form-error" id="authError"></p>
+        <button class="button primary full" id="authSubmit">
+          Create profile
+        </button>
+        <p class="switch-copy">
+          <span id="switchPrompt">Already have a profile?</span>
+          <button class="text-button" type="button" id="authSwitch">
+            Sign in
+          </button>
+        </p>
+      </form>
+    </section>
+    <section
+      class="overlay"
+      id="readerModal"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="readerTitle"
+    >
+      <article class="reader modal">
+        <div class="reader-head">
+          <div>
+            <div class="eyebrow">Now reading</div>
+            <h2 id="readerTitle"></h2>
+          </div>
+          <button class="icon-button" type="button" data-close="readerModal">
+            ×
+          </button>
+        </div>
+        <div class="reader-note" id="readerStatus">Loading pages…</div>
+        <pre class="reader-text" id="readerText"></pre>
+        <div class="reader-foot">
+          <button class="button" id="stopReading">Stop reading</button>
+          <button class="button primary" id="finishReading">
+            Finished reading · rate this book
+          </button>
+        </div>
+      </article>
+    </section>
+    <section
+      class="overlay"
+      id="reviewModal"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="reviewTitle"
+    >
+      <form class="modal" id="reviewForm">
+        <button
+          class="icon-button close"
+          type="button"
+          data-close="reviewModal"
+        >
+          ×
+        </button>
+        <div class="eyebrow">Your honest review</div>
+        <h2 id="reviewTitle">How was the book?</h2>
+        <p class="muted">Your rating adds to the shared book score.</p>
+        <div class="star-input" id="starsInput">
+          <button type="button" data-star="1">☆</button
+          ><button type="button" data-star="2">☆</button
+          ><button type="button" data-star="3">☆</button
+          ><button type="button" data-star="4">☆</button
+          ><button type="button" data-star="5">☆</button>
+        </div>
+        <label for="experience">How was your reading experience?</label
+        ><textarea
+          id="experience"
+          rows="5"
+          maxlength="2000"
+          required
+          placeholder="Share a few thoughts about the book."
+        ></textarea>
+        <p class="form-error" id="reviewError"></p>
+        <button class="button primary full">Save rating and experience</button>
+      </form>
+    </section>
+    <section
+      class="overlay"
+      id="profileModal"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="profileTitle"
+    >
+      <form class="modal" id="profileForm">
+        <button
+          class="icon-button close"
+          type="button"
+          data-close="profileModal"
+        >
+          ×
+        </button>
+        <div class="eyebrow">Reader profile</div>
+        <h2 id="profileTitle">Your profile</h2>
+        <label for="profileName">Name</label
+        ><input id="profileName" maxlength="60" required /><label
+          for="profileGenre"
+          >Favorite genre</label
+        ><select id="profileGenre"></select>
+        <p class="form-error" id="profileError"></p>
+        <button class="button primary full">Save changes</button
+        ><button class="button full" id="logoutButton" type="button">
+          Sign out
+        </button>
+      </form>
+    </section>
+  </body>
+</html>
